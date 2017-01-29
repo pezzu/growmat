@@ -1,0 +1,22 @@
+{
+  "name": "growmat",
+  "description": "Lorem ipsum",
+  "main": "app.js",
+  "authors": [
+    "peter.sukhenko@gmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "angular": "1.6.1"
+  }
+}

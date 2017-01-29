@@ -1,0 +1,26 @@
+{
+  "name": "growmat",
+  "version": "1.0.0",
+  "description": "Lorem ipsum",
+  "author": "peter.sukhenko@gmail.com",
+  "main": "server.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=1.4.28"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install --config.interactive=false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://pesu@bitbucket.org/pesu/growmat"
+  },
+  "dependencies": {
+    "bower": "^1.7.9",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "  "
+  }
+}

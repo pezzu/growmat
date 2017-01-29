@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <title>Control Panel</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body ng-app="GrowmatApp">
+  <div class="container">
+    <div ng-controller="ParamController as params">
+
+      <table class="table table-hover table-condensed">
+        <tr>
+          <td> Temperature </td>
+          <td> {{params.temperature}} </td>
+        </tr>
+
+        <tr>
+          <td> Humidity </td>
+          <td> {{params.humidity}} </td>
+        </tr>
+
+        <tr>
+          <td> Luminosity </td>
+          <td> {{params.luminosity}} </td>
+        </tr>
+
+        <tr>
+          <td> Soil Moisture </td>
+          <td> {{params.soil}} </td>
+        </tr>
+
+        <tr>
+          <td> Light </td>
+          <td> {{params.isLight}} </td>
+        </tr>
+
+        <tr>
+          <td> Fan </td>
+          <td> {{params.isFan}} </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+  <script src="lib/angular.min.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
