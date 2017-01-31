@@ -17,9 +17,7 @@ app.get('/api/box_params.json', function(req, res) {
 
     data = box.getParams();
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(data));
-
+    res.json(data);
 });
 
 app.post('/api/set_params', function(req, res) {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Lorem ipsum",
   "author": "peter.sukhenko@gmail.com",
-  "main": "server.js",
+  "main": "growmat.js",
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0",
@@ -17,10 +17,7 @@
     "url": "https://pesu@bitbucket.org/pesu/growmat"
   },
   "dependencies": {
-    "bower": "^1.7.9",
-    "express": "^4.14.0"
-  },
-  "devDependencies": {
-    "nodemon": "  "
+    "bower": "^1.8.0",
+    "express": "^4.14.1"
   }
 }
