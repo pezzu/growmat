@@ -3,8 +3,7 @@
 
 angular.module('GrowmatApp', [])
    .controller('ParamController', ParamController)
-   .service('ParamService', ParamService)
-   .constant('ApiBaseUrl', 'http://localhost:8080');
+   .service('ParamService', ParamService);
 
 
 ParamController.$inject = ['ParamService'];
@@ -23,13 +22,13 @@ function ParamController(ParamService) {
 }
 
   
-ParamService.$inject = ['$http', 'ApiBaseUrl'];
-function ParamService($http, ApiBaseUrl) {
+ParamService.$inject = ['$http'];
+function ParamService($http) {
    
    this.getParams = function () {
       return $http({
          method: 'GET',
-         url: (ApiBaseUrl + '/api/box_params.json')
+         url: ('api/box_params.json')
       })
       .then(function(response) {
          return response.data;
