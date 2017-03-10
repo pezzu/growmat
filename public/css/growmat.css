@@ -1,10 +1,16 @@
-table.center {
+#box-params {
     margin-left:auto; 
     margin-right:auto;
-  }
+}
+
+#box-params td {
+  height: 40px;
+  min-width: 12em;
+}
 
 #loading-icon {
   position: absolute;
   left: calc(100% / 2);
   top: 200px;
 }
+
