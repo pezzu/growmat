@@ -42,6 +42,19 @@
             <td> Fan </td>
             <td> {{params.fan}} </td>
          </tr>
+
+         <tr>
+            <td> Day / Night </td>
+            <td> 
+               <select ng-model=dayLength>
+                  <option value=12> 12h/12h </option>
+                  <option value=14> 14h/10h </option>
+                  <option value=16> 16h/8h </option>
+                  <option value=18> 18h/6h </option>
+               </select>
+            </td>
+         </tr>
+         
       </table>
       
    </div>
