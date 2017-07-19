@@ -10,7 +10,9 @@
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install --config.interactive=false"
+    "postinstall": "node_modules/.bin/bower install --config.interactive=false",
+    "start": "node ./growmat.js",
+    "monitor": "./node_modules/.bin/nodemon ./growmat.js 8080"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
     "bower": "^1.8.0",
     "express": "^4.14.1",
     "rpi-gpio": "^0.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
