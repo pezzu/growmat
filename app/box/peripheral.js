@@ -2,11 +2,11 @@ const gpio = require('rpi-gpio');
 
 
 function Socket(channel) {    
-    gpio.setup(channel, gpio.DIR_LOW, function(err) {
+    gpio.setup(channel, gpio.DIR_HIGH, function(err) {
         if (err) {
             throw err;
         }
-        gpio.write(channel, false, function(err) {
+        gpio.write(channel, true, function(err) {
             if (err) { 
                 throw err;
             }
@@ -25,11 +25,11 @@ Socket.prototype.turn = function(isOn) {
 }
 
 Socket.prototype.turnOn = function() {
-    this.turn(true);
+    this.turn(false);
 }
 
 Socket.prototype.turnOff = function() {
-    this.turn(false);
+    this.turn(true);
 }
 
 
