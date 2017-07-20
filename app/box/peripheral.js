@@ -6,6 +6,11 @@ function Socket(channel) {
         if (err) {
             throw err;
         }
+        gpio.write(channel, false, function(err) {
+            if (err) { 
+                throw err;
+            }
+        });
     });
 
     this.channel = channel;
