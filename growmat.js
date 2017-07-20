@@ -1,9 +1,6 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var box = require('./box/control.js');
-
-var port = 8080;
 
 app.use(express.static('public'));
 
@@ -13,16 +10,9 @@ app.use(express.static('public'));
 //   next();
 // });
 
-app.get('/api/box_params.json', function(req, res) {
+require('./app/box/routes.js')(app);
 
-    data = box.getParams();
-
-    res.json(data);
-});
-
-app.post('/api/set_params', function(req, res) {
-
-});
+const port = process.argv[2] || process.env.PORT || 8080;
 
 app.listen(port);
 console.log("Server running at port " + port);
