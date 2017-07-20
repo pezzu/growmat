@@ -11,7 +11,7 @@
   },
   "scripts": {
     "postinstall": "node_modules/.bin/bower install --config.interactive=false",
-    "start": "node ./growmat.js",
+    "start": "sudo node ./growmat.js 80",
     "monitor": "./node_modules/.bin/nodemon ./growmat.js 8080"
   },
   "repository": {
