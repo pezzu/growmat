@@ -11,7 +11,7 @@ function Socket(channel) {
     this.channel = channel;
 }
 
-Socket.turn = function(isOn) {
+Socket.prototype.turn = function(isOn) {
     gpio.write(this.channel, isOn, function(err) {
         if (err) { 
             throw err;
@@ -19,11 +19,11 @@ Socket.turn = function(isOn) {
     });
 }
 
-Socket.turnOn = function() {
+Socket.prototype.turnOn = function() {
     this.turn(true);
 }
 
-Socket.turnOff = function() {
+Socket.prototype.turnOff = function() {
     this.turn(false);
 }
 

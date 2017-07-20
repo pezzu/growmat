@@ -1,4 +1,4 @@
-const ctrl = require('controller.js');
+const ctrl = require('./controller.js');
 
 module.exports = function(app) {
 
