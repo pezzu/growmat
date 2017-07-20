@@ -29,6 +29,6 @@ Socket.prototype.turnOff = function() {
 
 
 module.exports.socket1 = new Socket(12);
-module.exports.socket2 = new Socket(13);
-module.exports.socket3 = new Socket(14);
-module.exports.socket4 = new Socket(15);
+module.exports.socket2 = new Socket(16);
+module.exports.socket3 = new Socket(18);
+module.exports.socket4 = new Socket(22);
