@@ -10,7 +10,7 @@ app.use(express.static('public'));
 //   next();
 // });
 
-require('./app/box/routes.js')(app);
+require('./app/web/routes.js')(app);
 
 const port = process.argv[2] || process.env.PORT || 8080;
 
