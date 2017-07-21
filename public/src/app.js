@@ -36,7 +36,7 @@ function ParamService($http) {
    this.getParams = function () {
       return $http({
          method: 'GET',
-         url: ('api/box_params.json')
+         url: ('api/params.json')
       })
       .then(function(response) {
          return response.data;
