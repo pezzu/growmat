@@ -13,6 +13,7 @@ function Socket(channel) {
         });
     });
 
+    this.isOn = false;
     this.channel = channel;
 }
 
@@ -24,11 +25,17 @@ Socket.prototype.turn = function(isOn) {
     });
 }
 
+Socket.prototype.isPowered = function() {
+    return this.isOn;
+}
+
 Socket.prototype.turnOn = function() {
+    this.isOn = true;
     this.turn(false);
 }
 
 Socket.prototype.turnOff = function() {
+    this.isOn = false;
     this.turn(true);
 }
 
