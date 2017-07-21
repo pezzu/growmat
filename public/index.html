@@ -4,6 +4,9 @@
 <head>
    <title>Control Panel</title>
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="lib/bootstrap-select/dist/css/bootstrap-select.min.css">
+   <link rel="stylesheet" href="lib/bootstrap-toggle/css/bootstrap-toggle.min.css">
    <link rel="stylesheet" href="css/growmat.css">
    <link rel="shortcut icon" href="img/favicon.png">
 </head>
@@ -29,36 +32,40 @@
          </tr>
 
          <tr>
-            <td> Soil Moisture </td>
-            <td> {{params.soil}} </td>
-         </tr>
-
-         <tr>
             <td> Light </td>
-            <td> {{params.light}} </td>
+            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleLight"> </td>
          </tr>
 
          <tr>
-            <td> Fan </td>
-            <td> {{params.fan}} </td>
+            <td> Ventilation </td>
+            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleVentilation"> </td>
          </tr>
 
          <tr>
-            <td> Day / Night </td>
+            <td> Circulation </td>
+            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleCirculation"> </td>
+         </tr>
+
+         <tr>
+            <td> Day / Night phase </td>
             <td> 
-               <select ng-model=dayLength>
-                  <option value=12> 12h/12h </option>
-                  <option value=14> 14h/10h </option>
-                  <option value=16> 16h/8h </option>
-                  <option value=18> 18h/6h </option>
+               <select ng-model=dayLength class="selectpicker">
+                   <option value=18> Vegetative (18h/6h) </option>
+                   <option value=12> Flowering (12h/12h) </option>
                </select>
             </td>
          </tr>
          
       </table>
-      
+     
    </div>
+   <script src="lib/jquery/dist/jquery.min.js"></script>
+   <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+   <script src="lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script> 
+   <script src="lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script> 
+   
    <script src="lib/angular/angular.min.js"></script>
+   
    <script src="src/app.js"></script>
 </body>
 
