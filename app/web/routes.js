@@ -7,8 +7,10 @@ module.exports = function(app) {
         res.json(data);
     });
 
-    // app.post('/api/params.json', function(req, res) {
-
-    // });
+    app.post('/api/params.json', function(req, res) {
+        const data = ctrl.setParams(req.body.params);
+        // console.log("data: " + req.body.params.light);
+        res.json(data);
+    });
 
 }

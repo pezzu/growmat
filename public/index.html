@@ -18,32 +18,27 @@
       <table id="box-params" class="table table-hover table-condensed center">
          <tr>
             <td> Temperature </td>
-            <td> {{params.temperature}} </td>
+            <td id="temperature"> </td>
          </tr>
 
          <tr>
             <td> Humidity </td>
-            <td> {{params.humidity}} </td>
-         </tr>
-
-         <tr>
-            <td> Luminosity </td>
-            <td> {{params.luminosity}} </td>
+            <td id="humidity">  </td>
          </tr>
 
          <tr>
             <td> Light </td>
-            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleLight"> </td>
+            <td> <input type="checkbox" data-toggle="toggle" id="light"> </td>
          </tr>
 
          <tr>
             <td> Ventilation </td>
-            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleVentilation"> </td>
+            <td> <input type="checkbox" data-toggle="toggle" id="ventilation"> </td>
          </tr>
 
          <tr>
             <td> Circulation </td>
-            <td> <input type="checkbox" checked data-toggle="toggle" id="toggleCirculation"> </td>
+            <td> <input type="checkbox" data-toggle="toggle" id="circulation"> </td>
          </tr>
 
          <tr>
@@ -64,9 +59,9 @@
    <script src="lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script> 
    <script src="lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script> 
    
-   <script src="lib/angular/angular.min.js"></script>
-   
-   <script src="src/app.js"></script>
+   <script src="script.js"></script>
+
+   <!-- <script src="src/app.js"></script> -->
 </body>
 
 </html>
