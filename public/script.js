@@ -3,26 +3,30 @@ $(document).ready(function () {
     function fillParams(data) {
         $('#temperature').append(data.temperature);
         $('#humidity').append(data.humidity);
-        $('#light').bootstrapToggle(data.light? 'on' : 'off');
-        $('#ventilation').bootstrapToggle(data.ventilation? 'on' : 'off');
-        $('#circulation').bootstrapToggle(data.circulation? 'on' : 'off');
+        
+        $('#light').off("change");
+        $('#ventilation').off("change");
+        $('#circulation').off("change");
+
+        $('#light').bootstrapToggle(data.light ? 'on' : 'off');
+        $('#ventilation').bootstrapToggle( data.ventilation ? 'on' : 'off');
+        $('#circulation').bootstrapToggle(data.circulation ? 'on' : 'off');
+        
+        $('#light').change(onToggle);
+        $('#ventilation').change(onToggle);
+        $('#circulation').change(onToggle);
+    }
+
+    function onToggle() {
+        const params = {};
+        params[this.id] = $(this).prop('checked') ? 1 : 0;
+        $.post('api/params.json', { params: params }, fillParams);    
     }
 
     $.getJSON('api/params.json', fillParams);
   
     // show spinner
   
-    $('#light').change(function () {
-        $.post('api/params.json',
-            {
-                params: {
-                    light: $(this).prop('checked') ? 1 : 0
-                }
-            },
-            function (data) {
-                console.log("data: " + data.light);    
-            });
-    });
     
 
 
