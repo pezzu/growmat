@@ -1,61 +1,38 @@
-// const box = require('./peripheral.js');
+const box = require('./peripheral.js');
 const settings = require('../settings/model.js');
 
-module.exports.getParams = function() {
-
+function getParams() {
     return {
-        temperature: 12,
-        humidity: 34,
-        light: false, 
-        ventilation: true,
-        circulation: false
+        temperature:    12,
+        humidity:       34,
+        light:          box.socket1.isPowered(), 
+        ventilation:    box.socket2.isPowered(),
+        circulation:    box.socket3.isPowered(),
+        daylightHours:  settings.daylightHours
     };
 
 };
 
-module.exports.setParams = function(data) {
-
-    Object.keys(data).forEach(function (key) { 
-        if (typeof settings[key] != 'undefined') {
-            settings[key] = data[key];
-        }
-    });
-
-    // var result;
+function setParams(data) {
+    if ('daylightHours' in data) {
+        settings.daylightHours = data.daylightHours;
+        settings.save();
+    }
 
     if ('light' in data) {
-        // box.socket1.turn(data.light === true);
-        
-        const isOn = (data.light == true);
-
-        var result = {
-            light: isOn, 
-            ventilation: isOn,
-            circulation: isOn
-        }; 
+        box.socket1.turn(data.light == true); 
     }
 
     if ('ventilation' in data) {
-        // box.socket2.turn(data.ventilation === true);
-
-        const isOn = (data.ventilation == true);
-        var result = {
-            light: isOn, 
-            ventilation: isOn,
-            circulation: isOn
-        }; 
+        box.socket2.turn(data.ventilation == true);
     }
 
     if ('circulation' in data) {
-        // box.socket3.turn(data.circulation === true);
-        const isOn = (data.circulation == true);
-        var result = {
-            light: isOn, 
-            ventilation: isOn,
-            circulation: isOn
-        }; 
+        box.socket3.turn(data.circulation == true);
     }
 
-    return result;
+    return getParams();
 };
 
+module.exports.getParams = getParams;
+module.exports.setParams = setParams;
