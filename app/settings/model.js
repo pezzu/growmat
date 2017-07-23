@@ -5,7 +5,7 @@ const homedir = require('os').homedir();
 const storage = path.join(homedir, '.gromat.json');
 
 function Settings() {
-    this.DaylightHours = 14;
+    this.daylightHours = 14;
     this.load();
 }
 
