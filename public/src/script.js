@@ -17,14 +17,12 @@ $(document).ready(function () {
     function onToggle() {
         const params = {};
         params[this.id] = $(this).prop('checked') ? 1 : 0;
-        console.log(this.id + ': ' + params[this.id]);
         $.post('api/params.json', { params: params }, fillParams);    
     }
 
     function onSelectDayHours() {
         const params = {};
         params[this.id] = $(this).val();
-        console.log(this.id + ': ' + params[this.id]);
         $.post('api/params.json', { params: params }, fillParams);    
     }
 
