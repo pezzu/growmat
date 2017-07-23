@@ -2,66 +2,72 @@
 <html lang="en">
 
 <head>
-   <title>Control Panel</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
-   <link rel="stylesheet" href="lib/bootstrap-select/dist/css/bootstrap-select.min.css">
-   <link rel="stylesheet" href="lib/bootstrap-toggle/css/bootstrap-toggle.min.css">
-   <link rel="stylesheet" href="css/growmat.css">
-   <link rel="shortcut icon" href="img/favicon.png">
+    <title>Control Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-toggle/css/bootstrap-toggle.min.css">
+    <link rel="stylesheet" href="css/growmat.css">
+    <link rel="shortcut icon" href="img/favicon.png">
 </head>
 
-<body ng-app="GrowmatApp">
-   <spinner></spinner>
-   <div id="main-data" ng-controller="ParamController as params">
+<body>
+    <spinner></spinner>
+    <div id="main-data">
 
-      <table id="box-params" class="table table-hover table-condensed center">
-         <tr>
-            <td> Temperature </td>
-            <td id="temperature"> </td>
-         </tr>
+        <table id="box-params" class="table table-hover table-condensed center">
+            <tr>
+                <td> Temperature </td>
+                <td id="temperature"> </td>
+            </tr>
 
-         <tr>
-            <td> Humidity </td>
-            <td id="humidity">  </td>
-         </tr>
+            <tr>
+                <td> Humidity </td>
+                <td id="humidity"> </td>
+            </tr>
 
-         <tr>
-            <td> Light </td>
-            <td> <input type="checkbox" data-toggle="toggle" id="light"> </td>
-         </tr>
+            <tr>
+                <td> Light </td>
+                <td> <input type="checkbox" data-toggle="toggle" id="light"> </td>
+            </tr>
 
-         <tr>
-            <td> Ventilation </td>
-            <td> <input type="checkbox" data-toggle="toggle" id="ventilation"> </td>
-         </tr>
+            <tr>
+                <td> Ventilation </td>
+                <td> <input type="checkbox" data-toggle="toggle" id="ventilation"> </td>
+            </tr>
 
-         <tr>
-            <td> Circulation </td>
-            <td> <input type="checkbox" data-toggle="toggle" id="circulation"> </td>
-         </tr>
+            <tr>
+                <td> Circulation </td>
+                <td> <input type="checkbox" data-toggle="toggle" id="circulation"> </td>
+            </tr>
 
-         <tr>
-            <td> Day / Night phase </td>
-            <td> 
-               <select ng-model=dayLength class="selectpicker">
-                   <option value=18> Vegetative (18h/6h) </option>
-                   <option value=12> Flowering (12h/12h) </option>
-               </select>
-            </td>
-         </tr>
-         
-      </table>
-     
-   </div>
-   <script src="lib/jquery/dist/jquery.min.js"></script>
-   <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-   <script src="lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script> 
-   <script src="lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script> 
-   
-   <script src="script.js"></script>
+            <tr>
+                <td> Day / Night phase </td>
+                <td>
+                    <select class="selectpicker" data-live-search="true" id="daylightHours">
+                        <optgroup label="Vegetative">
+                            <option value=20 data-tokens="2 0 20"> 20h/4h </option>
+                            <option value=18 data-tokens="1 8 18"> 18h/6h </option>
+                            <option value=16 data-tokens="1 6 16"> 16h/8h </option>
+                        </optgroup>
+                        <optgroup label="Flowering">
+                            <option value=12 data-tokens="1 2 12"> 12h/12h </option>
+                            <option value=10 data-tokens="1 0 10"> 10h/14h </option>
+                            <option value=8  data-tokens="1 6 8">   8h/16h </option>
+                        </optgroup>
+                    </select>
+                </td>
+            </tr>
 
-   <!-- <script src="src/app.js"></script> -->
+        </table>
+
+    </div>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
