@@ -1,5 +1,8 @@
-const gpio = require('rpi-gpio');
+const os = require('os');
 
+if (os.platform() !== 'win32') {
+var gpio = require('rpi-gpio');    
+}
 
 function Socket(channel) {    
     gpio.setup(channel, gpio.DIR_HIGH, function(err) {
@@ -39,8 +42,26 @@ Socket.prototype.turnOff = function() {
     this.turn(true);
 }
 
+function SocketMock() {
+    this.isOn = false;
+    this.turn = function (isOn) {
+        this.isOn = isOn;
+    };
+}
 
-module.exports.socket1 = new Socket(12);
-module.exports.socket2 = new Socket(16);
-module.exports.socket3 = new Socket(18);
-module.exports.socket4 = new Socket(22);
+SocketMock.prototype.turnOn = Socket.prototype.turnOn;
+SocketMock.prototype.turnOff = Socket.prototype.turnOff;
+SocketMock.prototype.isPowered = Socket.prototype.isPowered;
+
+if (os.platform() !== 'win32') {
+    module.exports.socket1 = new Socket(12);
+    module.exports.socket2 = new Socket(16);
+    module.exports.socket3 = new Socket(18);
+    module.exports.socket4 = new Socket(22);
+}
+else {
+    module.exports.socket1 = new SocketMock();
+    module.exports.socket2 = new SocketMock();
+    module.exports.socket3 = new SocketMock();
+    module.exports.socket4 = new SocketMock();    
+}
