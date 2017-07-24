@@ -1,16 +1,20 @@
 const os = require('os');
 
 if (os.platform() !== 'win32') {
-var gpio = require('rpi-gpio');    
+    var gpio = require('rpi-gpio');
+    var SocketFactory = Socket;
+}
+else {
+    var SocketFactory = SocketMock;
 }
 
-function Socket(channel) {    
+function Socket(channel) {
     gpio.setup(channel, gpio.DIR_HIGH, function(err) {
         if (err) {
             throw err;
         }
         gpio.write(channel, true, function(err) {
-            if (err) { 
+            if (err) {
                 throw err;
             }
         });
@@ -22,7 +26,7 @@ function Socket(channel) {
 
 Socket.prototype.turn = function(isOn) {
     gpio.write(this.channel, isOn, function(err) {
-        if (err) { 
+        if (err) {
             throw err;
         }
     });
@@ -42,10 +46,11 @@ Socket.prototype.turnOff = function() {
     this.turn(true);
 }
 
-function SocketMock() {
+function SocketMock(channel) {
+    this.channel = channel;
     this.isOn = false;
     this.turn = function (isOn) {
-        this.isOn = isOn;
+        console.log("Gpio " + this.channel + " is " + (this.isOn? "On":"Off"));
     };
 }
 
@@ -53,15 +58,8 @@ SocketMock.prototype.turnOn = Socket.prototype.turnOn;
 SocketMock.prototype.turnOff = Socket.prototype.turnOff;
 SocketMock.prototype.isPowered = Socket.prototype.isPowered;
 
-if (os.platform() !== 'win32') {
-    module.exports.socket1 = new Socket(12);
-    module.exports.socket2 = new Socket(16);
-    module.exports.socket3 = new Socket(18);
-    module.exports.socket4 = new Socket(22);
-}
-else {
-    module.exports.socket1 = new SocketMock();
-    module.exports.socket2 = new SocketMock();
-    module.exports.socket3 = new SocketMock();
-    module.exports.socket4 = new SocketMock();    
-}
+
+module.exports.socket1 = new SocketFactory(12);
+module.exports.socket2 = new SocketFactory(16);
+module.exports.socket3 = new SocketFactory(18);
+module.exports.socket4 = new SocketFactory(22);
