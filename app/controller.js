@@ -9,7 +9,9 @@ function getParams() {
         light:          box.socket1.isPowered(),
         ventilation:    box.socket2.isPowered(),
         circulation:    box.socket3.isPowered(),
-        daylightHours:  settings.daylightHours
+        daylightHours:  settings.daylightHours,
+        dawn:           scheduler.onTime(),
+        sunset:         scheduler.offTime()
     };
 
 };
@@ -38,7 +40,7 @@ function setParams(data) {
 
 
 function doDawn() {
-    box.socket1.do();
+    box.socket1.turnOn();
     box.socket2.turnOn();
     box.socket3.turnOn();
 }
