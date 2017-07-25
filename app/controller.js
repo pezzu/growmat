@@ -1,5 +1,5 @@
 const box = require('./peripheral.js');
-const settings = require('../settings/model.js');
+const settings = require('./settings.js');
 const scheduler = require('./scheduler.js');
 
 function getParams() {
