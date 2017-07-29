@@ -25,10 +25,12 @@ function Socket(channel) {
 }
 
 Socket.prototype.turn = function(isOn) {
-    gpio.write(this.channel, isOn, function(err) {
+    const self = this;
+    gpio.write(this.channel, !isOn, function (err) {
         if (err) {
             throw err;
         }
+        self.isOn = isOn;
     });
 }
 
@@ -37,20 +39,19 @@ Socket.prototype.isPowered = function() {
 }
 
 Socket.prototype.turnOn = function() {
-    this.isOn = true;
-    this.turn(false);
+    this.turn(true);
 }
 
 Socket.prototype.turnOff = function() {
-    this.isOn = false;
-    this.turn(true);
+    this.turn(false);
 }
 
 function SocketMock(channel) {
     this.channel = channel;
     this.isOn = false;
     this.turn = function (isOn) {
-        console.log("Gpio " + this.channel + " is " + (this.isOn? "On":"Off"));
+        this.isOn = isOn;
+        console.log("Gpio " + this.channel + " is " + (this.On? "On":"Off"));
     };
 }
 

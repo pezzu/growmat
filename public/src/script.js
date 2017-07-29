@@ -19,7 +19,7 @@ $(document).ready(function () {
     function onToggle() {
         const params = {};
         params[this.id] = $(this).prop('checked') ? 1 : 0;
-        $.post('api/params.json', { params: params }, fillParams);    
+        $.post('api/params.json', { params: params }, fillParams);
     }
 
     function onSelectDayHours() {
