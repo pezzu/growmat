@@ -6,6 +6,8 @@ $(document).ready(function () {
 
         $('#temperature').text(data.temperature);
         $('#humidity').text(data.humidity);
+        $('#dawn').text(data.dawn);
+        $('#sunset').text(data.sunset);
         $('#light').bootstrapToggle(data.light ? 'on' : 'off');
         $('#ventilation').bootstrapToggle( data.ventilation ? 'on' : 'off');
         $('#circulation').bootstrapToggle(data.circulation ? 'on' : 'off');
