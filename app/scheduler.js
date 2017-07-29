@@ -5,10 +5,10 @@ const jobs = {};
 function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
 
     const onTime = new schedule.RecurrenceRule();
-    onTime.hour = (24 + 2 + dayLength/2) % 24;
+    onTime.hour = (24 + 2 + (24-dayLength)/2) % 24;
 
     const offTime = new schedule.RecurrenceRule();
-    offTime.hour = (24 + 2 - dayLength/2) % 24;
+    offTime.hour = (24 + 2 - (24-dayLength)/2) % 24;
 
     jobs.on = {
         action: fnTurnOn,
