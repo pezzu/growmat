@@ -4,23 +4,41 @@ const path = require('path');
 const homedir = require('os').homedir();
 const storage = path.join(homedir, '.gromat.json');
 
+const parameters = {};
+
 function Settings() {
-    this.daylightHours = 14;
-    this.load();
+    load();
 }
 
-Settings.prototype.save = function() {
-    fs.writeFileSync(storage, JSON.stringify(this));
+save = function() {
+    fs.writeFileSync(storage, JSON.stringify(parameters));
 }
 
-Settings.prototype.load = function() {
+load = function() {
     try {
         const settings = JSON.parse(fs.readFileSync(storage, 'utf8'));
-        Object.keys(settings).forEach(key => this[key] = settings[key]);
+        Object.keys(settings).forEach(key => parameters[key] = settings[key]);
     }
     catch (e) {
         console.error('Error reading config file. Will use defaults');
     }
+}
+
+Settings.prototype.add = function (name, defValue) {
+    if (!Object.hasOwnProperty(parameters, name)) {
+        parameters[name] = defValue;
+    }    
+    
+    Object.defineProperty(this, name, {
+        enumerable: true,
+        get: function () {
+            return parameters[name];
+        },
+        set: function (value) {
+            parameters[name] = value;
+            save();
+        }
+    });
 }
 
 module.exports = new Settings();

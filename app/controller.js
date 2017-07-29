@@ -19,7 +19,6 @@ function getParams() {
 function setParams(data) {
     if ('daylightHours' in data) {
         settings.daylightHours = data.daylightHours;
-        settings.save();
         scheduler.setDayLight(settings.daylightHours, doDawn, doSunset);
     }
 
@@ -51,6 +50,7 @@ function doSunset() {
     box.socket3.turnOff();
 }
 
+settings.add('daylightHours', 14);
 scheduler.setDayLight(settings.daylightHours, doDawn, doSunset);
 
 module.exports.getParams = getParams;
