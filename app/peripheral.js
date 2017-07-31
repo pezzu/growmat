@@ -1,6 +1,7 @@
 const os = require('os');
+const isPi = require('detect-rpi');
 
-if (os.platform() !== 'win32') {
+if (isPi()) {
     var gpio = require('rpi-gpio');
     var SocketFactory = Socket;
 }
