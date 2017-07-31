@@ -10,9 +10,9 @@
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install --config.interactive=false",
+    "postinstall": "bower install --config.interactive=false && node conf/pi-install.js",
     "start": "sudo node ./growmat.js 80",
-    "monitor": "./node_modules/.bin/nodemon --ignore public/ ./growmat.js 8080"
+    "monitor": "nodemon --ignore public/ ./growmat.js 8080"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,14 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "bower": "^1.8.0",
+    "detect-rpi": "^1.2.0",
     "express": "^4.15.3",
-    "node-schedule": "^1.2.3",
-    "rpi-gpio": "^0.8.1"
+    "node-schedule": "^1.2.3"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "piDependencies": {
+    "rpi-gpio": "^0.8.1"
   }
 }
