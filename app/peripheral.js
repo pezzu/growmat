@@ -109,8 +109,7 @@ function SensorMock(pin) {
             this.inc = -this.inc;
         }
         
-        console.log("temp: " + this.temp);
-        console.log("humi: " + this.humi);
+        console.log("temp: " + this.temp + ", humi: " + this.humi);
     };
 }
 
