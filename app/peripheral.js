@@ -97,10 +97,18 @@ function SensorMock(pin) {
     this.temp = 0;
     this.humi = 0;
     
-    this.update = function () {
-        this.temp = 36.6;
-        this.humi = 63.3;
+    this.diff = 0;
+    this.inc = 1;
 
+    this.update = function () {
+        this.temp = (36.6 + this.diff).toFixed(1);
+        this.humi = (63.3 + this.diff).toFixed(1);
+
+        this.diff += 0.1 * this.inc;
+        if (this.diff >= 1 || this.diff <= -1) {
+            this.inc = -this.inc;
+        }
+        
         console.log("temp: " + this.temp);
         console.log("humi: " + this.humi);
     };
@@ -117,4 +125,4 @@ module.exports.sensor = sensor;
 module.exports.socket1 = new SocketFactory(12);
 module.exports.socket2 = new SocketFactory(16);
 module.exports.socket3 = new SocketFactory(18);
-module.exports.socket4 = new SocketFactory(22);
+module.exports.socket4 = new SocketFactory(22); 
