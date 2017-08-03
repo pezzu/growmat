@@ -14,11 +14,12 @@ else {
 function Socket(pin) {
     gpio.setup(pin, gpio.DIR_HIGH, function(err) {
         if (err) {
-            throw err;
+            console.error(err);
+            return;
         }
         gpio.write(pin, true, function(err) {
             if (err) {
-                throw err;
+                console.error(err);
             }
         });
     });
@@ -31,9 +32,11 @@ Socket.prototype.turn = function(isOn) {
     const self = this;
     gpio.write(this.pin, !isOn, function (err) {
         if (err) {
-            throw err;
+            console.error(err);
         }
-        self.isOn = isOn;
+        else {
+            self.isOn = isOn;
+        }
     });
 }
 
@@ -54,7 +57,7 @@ function SocketMock(pin) {
     this.isOn = false;
     this.turn = function (isOn) {
         this.isOn = isOn;
-        console.log("Gpio " + this.pin + " is " + (this.On? "On":"Off"));
+        console.log("Gpio " + this.pin + " is " + (this.isOn? "On":"Off"));
     };
 }
 
