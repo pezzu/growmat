@@ -4,8 +4,8 @@ const scheduler = require('./scheduler.js');
 
 function getParams() {
     return {
-        temperature:    12,
-        humidity:       34,
+        temperature:    box.sensor.temperature(),
+        humidity:       box.sensor.humidity(),
         light:          box.socket1.isPowered(),
         ventilation:    box.socket2.isPowered(),
         circulation:    box.socket3.isPowered(),

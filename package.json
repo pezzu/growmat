@@ -29,6 +29,7 @@
     "nodemon": "^1.11.0"
   },
   "piDependencies": {
+    "node-dht-sensor": "^0.0.32",
     "rpi-gpio": "^0.8.1"
   }
 }
