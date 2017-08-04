@@ -22,13 +22,16 @@ function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
         time:   offTime.hour
     };
 
-    turnOnIfNeed();
+    setTimeout(turnOnIfNeed, 10*1000);
 }
 
 function turnOnIfNeed() {
     const now = new Date().getHours();
     if((now >= jobs.on.time) && (now < jobs.off.time) || (jobs.on.time === jobs.off.time)) {
         jobs.on.action();
+    }
+    else {
+        jobs.off.action();
     }
 }
 

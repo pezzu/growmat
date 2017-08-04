@@ -96,7 +96,7 @@ function SensorMock(pin) {
     this.pin = pin;
     this.temp = 0;
     this.humi = 0;
-    
+
     this.diff = 0;
     this.inc = 1;
 
@@ -108,7 +108,7 @@ function SensorMock(pin) {
         if (this.diff >= 1 || this.diff <= -1) {
             this.inc = -this.inc;
         }
-        
+
         console.log("temp: " + this.temp + ", humi: " + this.humi);
     };
 }
@@ -118,10 +118,11 @@ SensorMock.prototype.humidity = Sensor.prototype.humidity;
 
 
 const sensor = new SensorFactory(4);
-setInterval(sensor.update.bind(sensor), 10 * 1000);
+setTimeout(sensor.update.bind(sensor), 5 * 1000);
+setInterval(sensor.update.bind(sensor), 60 * 1000);
 
 module.exports.sensor = sensor;
 module.exports.socket1 = new SocketFactory(12);
 module.exports.socket2 = new SocketFactory(16);
 module.exports.socket3 = new SocketFactory(18);
-module.exports.socket4 = new SocketFactory(22); 
+module.exports.socket4 = new SocketFactory(22);
