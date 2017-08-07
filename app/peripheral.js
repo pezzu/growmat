@@ -56,8 +56,11 @@ function SocketMock(pin) {
     this.pin = pin;
     this.isOn = false;
     this.turn = function (isOn) {
-        this.isOn = isOn;
-        console.log("Gpio " + this.pin + " is " + (this.isOn? "On":"Off"));
+        const self = this;
+        setTimeout(function () { 
+            self.isOn = isOn;
+            console.log("Gpio " + this.pin + " is " + (this.isOn? "On":"Off"));
+        }, 10);        
     };
 }
 
