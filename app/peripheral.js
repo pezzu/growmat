@@ -55,13 +55,18 @@ Socket.prototype.turnOff = function() {
 function SocketMock(pin) {
     this.pin = pin;
     this.isOn = false;
+    
     this.turn = function (isOn) {
         const self = this;
-        setTimeout(function () { 
-            self.isOn = isOn;
-            console.log("Gpio " + this.pin + " is " + (this.isOn? "On":"Off"));
-        }, 10);        
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () { 
+                self.isOn = isOn;
+                console.log("Gpio " + this.pin + " is " + (this.isOn ? "On" : "Off"));
+                resolve();
+            }, 10);
+        });
     };
+
 }
 
 SocketMock.prototype.turnOn = Socket.prototype.turnOn;
