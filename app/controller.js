@@ -2,7 +2,7 @@ const box = require('./peripheral.js');
 const settings = require('./settings.js');
 const scheduler = require('./scheduler.js');
 
-function getParams() {
+async function getParams() {
     return {
         temperature:    box.sensor.temperature(),
         humidity:       box.sensor.humidity(),
@@ -16,22 +16,22 @@ function getParams() {
 
 };
 
-function setParams(data) {
+async function setParams(data) {
     if ('daylightHours' in data) {
         settings.daylightHours = data.daylightHours;
         scheduler.setDayLight(settings.daylightHours, doDawn, doSunset);
     }
 
     if ('light' in data) {
-        box.socket1.turn(data.light == true);
+        await box.socket1.turn(data.light == true);
     }
 
     if ('ventilation' in data) {
-        box.socket2.turn(data.ventilation == true);
+        await box.socket2.turn(data.ventilation == true);
     }
 
     if ('circulation' in data) {
-        box.socket3.turn(data.circulation == true);
+        await box.socket3.turn(data.circulation == true);
     }
 
     return getParams();

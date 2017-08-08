@@ -30,13 +30,18 @@ function Socket(pin) {
 
 Socket.prototype.turn = function(isOn) {
     const self = this;
-    gpio.write(this.pin, !isOn, function (err) {
-        if (err) {
-            console.error(err);
-        }
-        else {
-            self.isOn = isOn;
-        }
+
+    return new Promise(function (resolve, reject) {
+        gpio.write(this.pin, !isOn, function (err) {
+            if (err) {
+                console.error(err);
+                reject(err);
+            }
+            else {
+                self.isOn = isOn;
+                resolve();
+            }
+        });
     });
 }
 
@@ -61,12 +66,11 @@ function SocketMock(pin) {
         return new Promise(function (resolve, reject) {
             setTimeout(function () { 
                 self.isOn = isOn;
-                console.log("Gpio " + this.pin + " is " + (this.isOn ? "On" : "Off"));
+                console.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
                 resolve();
             }, 10);
         });
     };
-
 }
 
 SocketMock.prototype.turnOn = Socket.prototype.turnOn;
