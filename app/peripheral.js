@@ -32,7 +32,7 @@ Socket.prototype.turn = function(isOn) {
     const self = this;
 
     return new Promise(function (resolve, reject) {
-        gpio.write(this.pin, !isOn, function (err) {
+        gpio.write(self.pin, !isOn, function (err) {
             if (err) {
                 console.error(err);
                 reject(err);
@@ -60,11 +60,11 @@ Socket.prototype.turnOff = function() {
 function SocketMock(pin) {
     this.pin = pin;
     this.isOn = false;
-    
+
     this.turn = function (isOn) {
         const self = this;
         return new Promise(function (resolve, reject) {
-            setTimeout(function () { 
+            setTimeout(function () {
                 self.isOn = isOn;
                 console.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
                 resolve();
