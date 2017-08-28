@@ -11,7 +11,8 @@
   },
   "scripts": {
     "postinstall": "bower install --config.interactive=false && node conf/pi-install.js",
-    "start": "sudo node ./growmat.js 80",
+    "start": "sudo forever start growmat.js 80",
+    "stop": "sudo forever stop growmat.js",
     "monitor": "nodemon --ignore public/ ./growmat.js 8080"
   },
   "repository": {
@@ -23,6 +24,7 @@
     "bower": "^1.8.0",
     "detect-rpi": "^1.2.0",
     "express": "^4.15.3",
+    "forever": "^0.15.3",
     "node-schedule": "^1.2.3"
   },
   "devDependencies": {
