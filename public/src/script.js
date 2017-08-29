@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('#light').bootstrapToggle(data.light ? 'on' : 'off');
         $('#ventilation').bootstrapToggle( data.ventilation ? 'on' : 'off');
         $('#circulation').bootstrapToggle(data.circulation ? 'on' : 'off');
-        $('#daylightHours').val(data.daylightHours);
+        $('#daylightHours').selectpicker('val', data.daylightHours);
 
         controls.forEach(ctrl => $(ctrl).change(onToggle));
     }
