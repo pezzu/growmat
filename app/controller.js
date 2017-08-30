@@ -50,7 +50,7 @@ function doSunset() {
     box.socket3.turnOff();
 }
 
-settings.add('daylightHours', 14);
+settings.add('daylightHours', 18);
 scheduler.setDayLight(settings.daylightHours, doDawn, doSunset);
 
 module.exports.getParams = getParams;
