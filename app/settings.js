@@ -25,10 +25,10 @@ load = function() {
 }
 
 Settings.prototype.add = function (name, defValue) {
-    if (!Object.hasOwnProperty(parameters, name)) {
+    if (!(name in parameters)) {
         parameters[name] = defValue;
-    }    
-    
+    }
+
     Object.defineProperty(this, name, {
         enumerable: true,
         get: function () {
