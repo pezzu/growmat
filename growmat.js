@@ -1,3 +1,4 @@
+const audit = require('./app/audit.js');
 const express = require('express');
 const app = express();
 const https = require('https');
@@ -19,4 +20,4 @@ const server = https.createServer({
 }, app);
 
 server.listen(port);
-console.log("Server running at port " + port);
+audit.log("Server running at port " + port);
