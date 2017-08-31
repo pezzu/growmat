@@ -1,7 +1,7 @@
 const box = require('./peripheral.js');
 const settings = require('./settings.js');
 const scheduler = require('./scheduler.js');
-const trace = require('./trace.js');
+const audit = require('./audit.js');
 
 async function getParams() {
     return {
@@ -40,14 +40,14 @@ async function setParams(data) {
 
 
 function doDawn() {
-    trace.log('Scheduled dawn');
+    audit.log('Scheduled dawn');
     box.socket1.turnOn();
     box.socket2.turnOn();
     box.socket3.turnOn();
 }
 
 function doSunset() {
-    trace.log('Scheduled sunset');
+    audit.log('Scheduled sunset');
     box.socket1.turnOff();
     box.socket2.turnOff();
     box.socket3.turnOff();

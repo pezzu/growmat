@@ -1,5 +1,5 @@
 const isPi = require('detect-rpi');
-const trace = require('./trace.js');
+const audit = require('./audit.js');
 
 if (isPi()) {
     var gpio = require('rpi-gpio');
@@ -15,12 +15,12 @@ else {
 function Socket(pin) {
     gpio.setup(pin, gpio.DIR_HIGH, function(err) {
         if (err) {
-            trace.error(err);
+            audit.error(err);
             return;
         }
         gpio.write(pin, true, function(err) {
             if (err) {
-                trace.error(err);
+                audit.error(err);
             }
         });
     });
@@ -35,12 +35,12 @@ Socket.prototype.turn = function(isOn) {
     return new Promise(function (resolve, reject) {
         gpio.write(self.pin, !isOn, function (err) {
             if (err) {
-                trace.error(err);
+                audit.error(err);
                 reject(err);
             }
             else {
                 self.isOn = isOn;
-                trace.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
+                audit.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
                 resolve();
             }
         });
@@ -68,7 +68,7 @@ function SocketMock(pin) {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
                 self.isOn = isOn;
-                trace.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
+                audit.log("Gpio " + self.pin + " is " + (self.isOn ? "On" : "Off"));
                 resolve();
             }, 10);
         });
@@ -92,7 +92,7 @@ function Sensor(pin) {
                 self.humi = humidity.toFixed(1);
             }
             else {
-                trace.error(err);
+                audit.error(err);
             }
         });
     }
@@ -122,8 +122,7 @@ function SensorMock(pin) {
         if (this.diff >= 1 || this.diff <= -1) {
             this.inc = -this.inc;
         }
-
-        trace.log("temp: " + this.temp + ", humi: " + this.humi);
+        // console.log("temp: " + this.temp + ", humi: " + this.humi);
     };
 }
 

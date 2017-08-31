@@ -1,3 +1,4 @@
+const audit = require('./app/audit.js');
 const express = require('express');
 const app = express();
 
@@ -13,4 +14,4 @@ require('./app/routes.js')(app);
 const port = process.argv[2] || process.env.PORT || 8080;
 
 app.listen(port);
-console.log("Server running at port " + port);
+audit.log("Server running at port " + port);

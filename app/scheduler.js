@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+const audit = require('./audit.js');
 
 const jobs = {};
 
@@ -22,6 +23,7 @@ function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
         time:   offTime.hour
     };
 
+    audit.log('Daylight is scheduled for ' + onTime.hour + ':00 - ' + offTime.hour + ':00');
     setTimeout(turnOnIfNeed, 10*1000);
 }
 
