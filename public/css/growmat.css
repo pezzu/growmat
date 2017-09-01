@@ -14,3 +14,33 @@
   top: 200px;
 }
 
+.container{
+  min-width: 420px
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 770px;
+		margin-top : 40px;	
+    }
+}
+
+.well {
+	margin-bottom: 0;
+}
+
+.desaturated {
+    filter: grayscale(100%);
+}
+
+#ex1 {
+    width : 600px
+}
+
+#ex1Slider .slider-selection {
+	background: #5A5A5A;
+}
+
+#ex1Slider .slider-track-high {
+	background: yellow;
+}
