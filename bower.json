@@ -19,7 +19,6 @@
     "jquery": "^3.2.1",
     "bootstrap": "^3.3.7",
     "bootstrap-toggle": "^2.2.2",
-    "bootstrap-select": "^1.12.4",
-    "seiyria-bootstrap-slider" : "^9.8.1"
+    "bootstrap-select": "^1.12.4"
   }
 }

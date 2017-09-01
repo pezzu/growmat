@@ -1,6 +1,5 @@
-var values = ["20h/4h", "18h/6h", "16h/8h", "12h/12h", "10h/14h", "8h/16h"];
-
 $(document).ready(function () {
+ 
     function fillParams(data) {
         const controls = ['#light', '#ventilation', '#circulation']; 
         controls.forEach(ctrl => $(ctrl).off('change'));
@@ -28,19 +27,6 @@ $(document).ready(function () {
         params[this.id] = $(this).val();
         $.post('api/params.json', { params: params }, fillParams);    
     }
-
-    $(".toggle-btn").click(
-        function(){
-            $(this).find("img").toggleClass("desaturated");
-        }
-    );
-
-	$('#ex1').slider({
-		formatter: function(value) {
-            $("#day-night-value h2").text(values[value]);
-			return 'Current value: ' + values[value];
-		}
-	});
 
     // show spinner
 
