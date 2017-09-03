@@ -17,26 +17,34 @@ if((typeof(local) === 'String') && (typeof(remote) === 'String') && (local !== r
     deploy(repo, remote);
 }
 
-function deploy(repo, rev) {
+
+function deploy(repository, destination) {
     const fs = require('fs');
     const path = require('path');
 
-    const depoyDest = path.join(__dirname, '..', '..', rev);
+    // const prodDir = path.join(destination, 'live');
+    const updtDir = path.join(destination, 'update');
+
+    if(fs.existSync(updtDir)) {
+        console.error('Folder ' + updtDir + ' already exists. Update abandoned');
+        process.exit(1);
+    }
 
     try {
-        fs.mkdirSync(depoyDest);
+        fs.mkdirSync(updtDir);
 
-        // git clone https://pesu@bitbucket.org/pesu/growmat.git deployDest
-        execFile('git', ['clone', repo, deployDest]);
+        // git clone --branch stable https://pesu@bitbucket.org/pesu/growmat.git updtDir
+        execFile('git', ['clone', '--branch', 'stable', repository, updtDir]);
 
-        // git checkout stable
-        process.chdir(deployDest);
-        execFile('git', ['checkout', 'stable']);
-
+        process.chdir(updtDir);
         execFile('npm', ['install']);
+
+        const restartScript = path.join(updtDir, 'deploy/restart.sh');
+        // fs-extra.copySync(restartScript, destination, {overwrite: true});
+        fs.writeFileSync(path.join(destination, 'restart.sh'), fs.readFileSync(restartScript));
     }
     catch(e) {
-        console.error('Error occured during update. Will remain n current version');
+        console.error('Error occured during update. Will remain on current version');
         console.error(e);
     }
 }
