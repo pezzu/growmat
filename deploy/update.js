@@ -1,50 +1,103 @@
-const execFile = require('child_process').execFileSync;
+const child_process = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
-//git remote get-url origin
-const repo = execFile('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString();
+const command = process.argv[2];
+const targetDir = process.argv[3];
 
-// git rev-parse HEAD
-const local = execFile('git', ['rev-parse', 'HEAD'], {timeout: 20000}).slice(0, 40).toString();
+try{
+    switch(command) {
 
-// git ls-remote --tags https://pesu@bitbucket.org/pesu/growmat.git stable
-const remote = execFile('git', ['ls-remote', '-q', '--tags', repo, 'stable'], {timeout: 20000}).slice(0, 40).toString();
+        case 'deploy':
+            if(targetDir != null) {
+                const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString();
+                const environmentDir = path.join(path.resolve(targetDir), 'prod');;
 
-// console.log('Local: ' + local);
-// console.log('Remote: ' + remote);
+                deploy(repository, environmentDir);
+                restart(environmentDir);
+            }
+            else {
+                usage();
+            }
+            break;
 
-if((typeof(local) === 'String') && (typeof(remote) === 'String') && (local !== remote)) {
-    console.log('Performing update to ' + remote + ' (currently: ' + local + ')');
-    deploy(repo, remote);
+        case 'update':
+            const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString();
+            const environmentDir = path.join(path.resolve(targetDir) || path.join(__dirname , '..', '..'), 'update');
+
+            const revision = getNewRevision(repository);
+
+            if(revision != null) {
+                deploy(repository, environmentDir);
+                restart(environmentDir);
+            }
+            break;
+
+        default:
+            usage();
+    }
+}
+catch(e) {
+    console.error('Error occured during update. Will remain on current version');
+    console.error(e);
 }
 
 
-function deploy(repository, destination) {
-    const fs = require('fs');
-    const path = require('path');
+function usage() {
+    console.error
+(`Usage: ${path.basename(process.argv[1])} <action> [environment-dir]
 
-    // const prodDir = path.join(destination, 'live');
-    const updtDir = path.join(destination, 'update');
+Perform deployment and autoupdate
 
-    if(fs.existSync(updtDir)) {
-        console.error('Folder ' + updtDir + ' already exists. Update abandoned');
+action:
+    deploy: deploy from git to environment-dir
+    update: check repository and deploy from git to environment-dir or $CWD/..
+
+environment-dir : target directory which contains 'prod' & 'update' folders`);
+    process.exit(1);
+}
+
+
+function getNewRevision(repository) {
+    // git rev-parse HEAD
+    const local = child_process.execFileSync('git', ['rev-parse', 'HEAD'], {timeout: 20000}).slice(0, 40).toString();
+
+    // git ls-remote --tags https://pesu@bitbucket.org/pesu/growmat.git stable
+    const remote = child_process.execFileSync('git', ['ls-remote', '-q', '--tags', repository, 'stable'], {timeout: 20000}).slice(0, 40).toString();
+
+    if((typeof(local) === 'String') && (typeof(remote) === 'String') && (local !== remote)) {
+        console.log('Update available to ' + remote + ' (currently: ' + local + ')');
+        return remote;
+    }
+    else {
+        return null;
+    }
+}
+
+
+function deploy(repository, environmentDir) {
+    if(fs.existSync(environmentDir)) {
+        console.error('Folder ' + environmentDir + ' already exists. Update abandoned');
         process.exit(1);
     }
 
-    try {
-        fs.mkdirSync(updtDir);
+    fs.mkdirSync(environmentDir);
 
-        // git clone --branch stable https://pesu@bitbucket.org/pesu/growmat.git updtDir
-        execFile('git', ['clone', '--branch', 'stable', repository, updtDir]);
+    // git clone --branch stable https://pesu@bitbucket.org/pesu/growmat.git environmentDir
+    child_process.execFileSync('git', ['clone', '--branch', 'stable', repository, environmentDir]);
 
-        process.chdir(updtDir);
-        execFile('npm', ['install']);
+    process.chdir(environmentDir);
+    child_process.execFileSync('npm', ['install']);
 
-        const restartScript = path.join(updtDir, 'deploy/restart.sh');
-        // fs-extra.copySync(restartScript, destination, {overwrite: true});
-        fs.writeFileSync(path.join(destination, 'restart.sh'), fs.readFileSync(restartScript));
-    }
-    catch(e) {
-        console.error('Error occured during update. Will remain on current version');
-        console.error(e);
-    }
+    const restartScriptSrc = path.join(environmentDir, 'deploy/restart.sh');
+    const restartScriptProd = path.join(environmentDir, '../restart.sh');
+
+    // fs-extra.copySync(restartScript, destination, {overwrite: true});
+    fs.writeFileSync(restartScriptProd, fs.readFileSync(restartScriptSrc));
+}
+
+
+function restart(environmentDir) {
+    const restartScript = path.join(environmentDir, '../restart.sh');
+    child_process.spawn(restartScript);
 }
