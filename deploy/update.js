@@ -10,7 +10,7 @@ try{
 
         case 'deploy':
             if(targetDir != null) {
-                const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString();
+                const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString().trim();
                 const environmentDir = path.join(path.resolve(targetDir), 'prod');;
 
                 deploy(repository, environmentDir);
@@ -22,7 +22,7 @@ try{
             break;
 
         case 'update':
-            const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString();
+            const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString().trim();
             const environmentDir = path.join(path.resolve(targetDir) || path.join(__dirname , '..', '..'), 'update');
 
             const revision = getNewRevision(repository);
@@ -76,7 +76,7 @@ function getNewRevision(repository) {
 
 
 function deploy(repository, environmentDir) {
-    if(fs.existSync(environmentDir)) {
+    if(fs.existsSync(environmentDir)) {
         console.error('Folder ' + environmentDir + ' already exists. Update abandoned');
         process.exit(1);
     }
