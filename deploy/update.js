@@ -38,8 +38,8 @@ try{
     }
 }
 catch(e) {
-    console.error('Error occured during update. Will remain on current version');
-    console.error(e);
+    console.error('Error occured during update. Will remain on current version\n', e);
+    process.exit(1);
 }
 
 
@@ -84,10 +84,10 @@ function deploy(repository, environmentDir) {
     fs.mkdirSync(environmentDir);
 
     // git clone --branch stable https://pesu@bitbucket.org/pesu/growmat.git environmentDir
-    child_process.execFileSync('git', ['clone', '--branch', 'stable', repository, environmentDir]);
+    child_process.execFileSync('git', ['clone', '-q', '--branch', 'stable', repository, environmentDir]);
 
     process.chdir(environmentDir);
-    child_process.execFileSync('npm', ['install']);
+    child_process.spawnSync('npm', ['install']);
 
     const restartScriptSrc = path.join(environmentDir, 'deploy/restart.sh');
     const restartScriptProd = path.join(environmentDir, '../restart.sh');
