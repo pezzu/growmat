@@ -23,7 +23,7 @@ try{
 
         case 'update':
             const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString().trim();
-            const environmentDir = path.join(path.resolve(targetDir) || path.join(__dirname , '..', '..'), 'update');
+            const environmentDir = path.join(targetDir? path.resolve(targetDir) : path.join(__dirname , '..', '..'), 'update');
 
             const revision = getNewRevision(repository);
 
@@ -65,7 +65,7 @@ function getNewRevision(repository) {
     // git ls-remote --tags https://pesu@bitbucket.org/pesu/growmat.git stable
     const remote = child_process.execFileSync('git', ['ls-remote', '-q', '--tags', repository, 'stable'], {timeout: 20000}).slice(0, 40).toString();
 
-    if((typeof(local) === 'String') && (typeof(remote) === 'String') && (local !== remote)) {
+    if((typeof(local) === 'string') && (typeof(remote) === 'string') && (local !== remote)) {
         console.log('Update available to ' + remote + ' (currently: ' + local + ')');
         return remote;
     }
