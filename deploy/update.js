@@ -83,11 +83,11 @@ function deploy(repository, environmentDir) {
 
     fs.mkdirSync(environmentDir);
 
-    // git clone --branch stable https://pesu@bitbucket.org/pesu/growmat.git environmentDir
-    child_process.execFileSync('git', ['clone', '-q', '--branch', 'stable', repository, environmentDir]);
+    console.log('Checking out from git');
+    child_process.spawnSync('git', ['clone', '-q', '--branch', 'stable', repository, environmentDir], {stdio: 'inherit'});
 
-    process.chdir(environmentDir);
-    child_process.spawnSync('npm', ['install']);
+    console.log('Running npm install');
+    child_process.spawnSync('npm', ['install'], {cwd: environmentDir, shell: true, stdio: 'inherit'});
 
     const restartScriptSrc = path.join(environmentDir, 'deploy/restart.sh');
     const restartScriptProd = path.join(environmentDir, '../restart.sh');
