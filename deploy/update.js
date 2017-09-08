@@ -23,12 +23,12 @@ try{
 
         case 'update':
             const repository = child_process.execFileSync('git', ['remote', 'get-url', 'origin'], {timeout: 20000}).toString().trim();
-            const environmentDir = path.join(targetDir? path.resolve(targetDir) : path.join(__dirname , '..', '..'), 'update');
+            const environment = targetDir? path.resolve(targetDir) : path.join(__dirname , '..', '..');
 
-            const revision = getNewRevision(repository);
+            const revision = getNewRevision(repository, path.join(environment, 'prod'));
 
             if(revision != null) {
-                deploy(repository, environmentDir);
+                deploy(repository, path.join(environment, 'update'));
                 restart(environmentDir);
             }
             break;
@@ -38,7 +38,7 @@ try{
     }
 }
 catch(e) {
-    console.error('Error occured during update. Will remain on current version\n', e);
+    console.error('Error occurred during update. Will remain on current version\n', e);
     process.exit(1);
 }
 
@@ -58,9 +58,9 @@ environment-dir : target directory which contains 'prod' & 'update' folders`);
 }
 
 
-function getNewRevision(repository) {
+function getNewRevision(repository, localDir) {
     // git rev-parse HEAD
-    const local = child_process.execFileSync('git', ['rev-parse', 'HEAD'], {timeout: 20000}).slice(0, 40).toString();
+    const local = child_process.execFileSync('git', ['rev-parse', 'HEAD'], {cwd: localDir, timeout: 20000}).slice(0, 40).toString();
 
     // git ls-remote --tags https://pesu@bitbucket.org/pesu/growmat.git stable
     const remote = child_process.execFileSync('git', ['ls-remote', '-q', '--tags', repository, 'stable'], {timeout: 20000}).slice(0, 40).toString();
@@ -87,7 +87,7 @@ function deploy(repository, environmentDir) {
     child_process.spawnSync('git', ['clone', '-q', '--branch', 'stable', repository, environmentDir], {stdio: 'inherit'});
 
     console.log('Running npm install');
-    child_process.spawnSync('npm', ['install'], {cwd: environmentDir, shell: true, stdio: 'inherit'});
+    child_process.spawnSync('npm', ['install', '--no-save'], {cwd: environmentDir, shell: true, stdio: 'inherit'});
 
     const restartScriptSrc = path.join(environmentDir, 'deploy/restart.sh');
     const restartScriptProd = path.join(environmentDir, '../restart.sh');
