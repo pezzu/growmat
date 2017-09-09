@@ -28,7 +28,7 @@ $(document).ready(function () {
         params[this.id] = $(this).val();
         $.post('api/params.json', { params: params }, fillParams);    
     }
-
+/*
     $(".toggle-btn").click(
         function(){
             $(this).find("img").toggleClass("desaturated");
@@ -41,7 +41,7 @@ $(document).ready(function () {
 			return 'Current value: ' + values[value];
 		}
 	});
-
+*/
     // show spinner
 
     $('#daylightHours').change(onSelectDayHours);

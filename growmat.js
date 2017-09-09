@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const https = require('https');
 const fs = require('fs');
+const WebSocket = require('ws');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -17,7 +18,10 @@ const port = process.argv[2] || process.env.PORT || 8080;
 const server = https.createServer({
     key: fs.readFileSync('cert/key.pem'),
     cert: fs.readFileSync('cert/cert.pem')
-}, app);
+}, app).listen(port);
 
-server.listen(port);
+const wss = new WebSocket.Server({'server': server, perMessageDeflate: false});
+require('./video/socket.js')(wss);
+
+// server.listen(port);
 audit.log("Server running at port " + port);
