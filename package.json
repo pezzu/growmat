@@ -11,7 +11,7 @@
   },
   "scripts": {
     "deploy": "node deploy/update.js deploy",
-    "monitor": "nodemon --ignore public/ ./growmat.js 8080",
+    "monitor": "nodemon --ignore public/ --ignore services/ ./growmat.js 8080",
     "postinstall": "bower install --config.interactive=false && node conf/pi-install.js",
     "restart": "sudo node_modules/.bin/forever list | grep growmat.js | grep -v grep && npm stop; npm start",
     "start": "sudo node_modules/.bin/forever start growmat.js 80; sudo node_modules/.bin/forever start stream.js 443",
