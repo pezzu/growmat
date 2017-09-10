@@ -3,16 +3,24 @@ const express = require('express');
 const app = express();
 
 const http = require('http');
+const https = require('https');
 const WebSocket = require('ws');
+
+const fs = require('fs');
 
 app.use(express.static('public'));
 
 const httpPort = process.argv[2] || 8080;
-const wsPort = httpPort + 1;
-const streamPort = httpPort + 2;
+const wsPort = process.argv[3] || httpPort + 1;
+const streamPort = process.argv[4] || httpPort + 2;
+
+const options = {
+    key: fs.readFileSync('cert/key.pem'),
+    cert: fs.readFileSync('cert/cert.pem')
+};
 
 // Web server
-const httpServer = http.createServer(app).listen(httpPort);
+const httpServer = https.createServer(options, app).listen(httpPort);
 
 // Websocket Server
 const socketServer = new WebSocket.Server({port: wsPort, perMessageDeflate: false});
