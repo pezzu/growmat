@@ -10,7 +10,7 @@ const fs = require('fs');
 
 app.use(express.static('public'));
 
-const httpPort = process.argv[2] || 8080;
+const httpPort = process.argv[2] || 8443;
 const wsPort = process.argv[3] || httpPort + 1;
 const streamPort = process.argv[4] || httpPort + 2;
 
