@@ -20,10 +20,11 @@ const options = {
 };
 
 // Web server
-const httpServer = https.createServer(options, app).listen(httpPort);
+const webServer = https.createServer(options, app).listen(httpPort);
 
 // Websocket Server
-const socketServer = new WebSocket.Server({port: wsPort, perMessageDeflate: false});
+const https4ws = https.createServer(options, app).listen(wsPort);
+const socketServer = new WebSocket.Server({server: https4ws, perMessageDeflate: false});
 
 socketServer.broadcast = function(data) {
     socketServer.clients.forEach(function each(client) {
