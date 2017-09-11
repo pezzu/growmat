@@ -1,18 +1,26 @@
-REQUIREMENTS
+## DEPENDENCIES
 
-1. nodejs (https://nodejs.org)
-2. bcm2835 (http://www.airspayce.com/mikem/bcm2835/)
-3. ffmpeg (https://www.ffmpeg.org/)
+1. [nodejs](https://nodejs.org)
+2. [bcm2835](http://www.airspayce.com/mikem/bcm2835/)
+3. [ffmpeg](https://www.ffmpeg.org/)
+
+## SETUP
+
+1. Add user to gpio group (in order to run as non root)
+
+sudo adduser pi gpio
 
 
 
+## INSTALLATION
 
-INSTALLATION
-
+1. nodejs
+  1. npm install pm2 -g
 
 2. bcm2835 (from: http://www.airspayce.com/mikem/bcm2835/)
 
-# download the latest version of the library, say bcm2835-1.xx.tar.gz, then:
+download the latest version of the library, say bcm2835-1.xx.tar.gz, then:
+
 tar zxvf bcm2835-1.xx.tar.gz
 cd bcm2835-1.xx
 ./configure
