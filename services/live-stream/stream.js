@@ -7,16 +7,17 @@ const https = require('https');
 const WebSocket = require('ws');
 
 const fs = require('fs');
+const path = require('path');
 
 app.use(express.static('public'));
 
-const httpPort = process.argv[2] || 8443;
-const wsPort = process.argv[3] || httpPort + 1;
-const streamPort = process.argv[4] || httpPort + 2;
+const httpPort   = process.argv[2] || process.env.WEB_PORT    || 8443;
+const wsPort     = process.argv[3] || process.env.SOCKET_PORT || parseInt(httpPort) + 1;
+const streamPort = process.argv[4] || process.env.STREAM_PORT || parseInt(httpPort) + 2;
 
 const options = {
-    key: fs.readFileSync('cert/key.pem'),
-    cert: fs.readFileSync('cert/cert.pem')
+    key: fs.readFileSync(path.resolve(__dirname, '../../cert/key.pem')),
+    cert: fs.readFileSync(path.resolve(__dirname, '../../cert/cert.pem'))
 };
 
 // Web server
