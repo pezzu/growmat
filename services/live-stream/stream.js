@@ -49,7 +49,7 @@ const streamServer = http.createServer( function(request, response) {
 
     response.connection.setTimeout(0);
     console.log(
-        'Stream Connected: ' +
+        'Stream connected: ' +
         request.socket.remoteAddress + ':' +
         request.socket.remotePort
     );
@@ -60,7 +60,7 @@ const streamServer = http.createServer( function(request, response) {
         }
     });
     request.on('end',function(){
-        console.log('close');
+        console.log('Screen closed');
         if (request.socket.recording) {
             request.socket.recording.close();
         }
