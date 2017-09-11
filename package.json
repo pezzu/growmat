@@ -11,11 +11,11 @@
   },
   "scripts": {
     "deploy": "node deploy/update.js deploy",
-    "monitor": "nodemon --ignore public/ ./growmat.js 8080",
+    "monitor": "nodemon --ignore public/ --ignore services/ ./growmat.js 8080",
     "postinstall": "bower install --config.interactive=false && node conf/pi-install.js",
     "restart": "sudo node_modules/.bin/forever list | grep growmat.js | grep -v grep && npm stop; npm start",
-    "start": "sudo node_modules/.bin/forever start -l prod.log -a growmat.js 443",
-    "stop": "sudo node_modules/.bin/forever stop growmat.js"
+    "start": "sudo node_modules/.bin/forever start growmat.js 80; sudo node_modules/.bin/forever start stream.js 443",
+    "stop": "sudo node_modules/.bin/forever stop growmat.js; sudo node_modules/.bin/forever stop stream.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
     "detect-rpi": "^1.2.0",
     "express": "^4.15.3",
     "forever": "^0.15.3",
-    "node-schedule": "^1.2.3"
+    "node-schedule": "^1.2.3",
+    "ws": "^3.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

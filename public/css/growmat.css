@@ -18,6 +18,10 @@
   min-width: 420px
 }
 
+#view-stream{
+    text-align: center;
+}
+
 @media (min-width: 1200px) {
     .container{
         max-width: 770px;

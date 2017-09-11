@@ -1,8 +1,7 @@
 const audit = require('./app/audit.js');
 const express = require('express');
 const app = express();
-const https = require('https');
-const fs = require('fs');
+const http = require('http');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -14,10 +13,7 @@ require('./app/routes.js')(app);
 
 const port = process.argv[2] || process.env.PORT || 8080;
 
-const server = https.createServer({
-    key: fs.readFileSync('cert/key.pem'),
-    cert: fs.readFileSync('cert/cert.pem')
-}, app);
+const server = http.createServer(app);
 
 server.listen(port);
 audit.log("Server running at port " + port);
