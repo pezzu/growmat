@@ -1,4 +1,3 @@
-// const audit = require('./app/audit.js');
 const express = require('express');
 const app = express();
 
@@ -9,7 +8,25 @@ const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
 
-app.use(express.static(path.resolve(__dirname, 'public')));
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+
+// setup authentication
+// require('./app/passport.js')(passport);
+
+app.use(cookieParser());
+app.use(bodyParser());  // get information from html forms
+
+// required for passport
+app.use(session({ secret: 'godsavethequeenplease' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+// app.use(flash()); // use connect-flash for flash messages stored in session
+
+require('./app/routes.js')(app, passport);
+
 
 const httpPort   = process.argv[2] || process.env.WEB_PORT    || 8443;
 const wsPort     = process.argv[3] || process.env.SOCKET_PORT || parseInt(httpPort) + 1;
