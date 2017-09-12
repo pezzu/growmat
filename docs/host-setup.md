@@ -19,9 +19,12 @@ crw-rw---- 1 root gpio 244, 0 Dec 28 22:51 /dev/gpiomem
 
 ## INSTALLATION
 
-1. nodejs
-Install it somehow
+1. nodejs 8.x (from: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
+```
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 2. pm2
 ```
 npm install pm2 -g
