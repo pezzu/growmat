@@ -1,5 +1,5 @@
 const isPi = require('detect-rpi');
-const audit = require('./audit.js');
+const audit = require('./../../commons/audit.js');
 
 if (isPi()) {
     var gpio = require('rpi-gpio');

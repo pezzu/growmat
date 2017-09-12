@@ -1,3 +1,4 @@
+const audit = require('./../../commons/audit.js');
 const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
@@ -27,10 +28,10 @@ module.exports = function(passport) {
     passport.use('local-signup', new LocalStrategy(
         function(username, password, done) {
             if (!validPassword(username, password)) {
-                console.log('Invalid user or password: ' + username + '/' + password);
+                audit.log('Invalid user or password: ' + username + '/' + password);
                 return done(null, false, { message: 'Invalid user or password' });
             }
-            console.log('Login OK');
+            audit.log('Successful login for user: ' + username);
             return done(null, username);
         })
     );

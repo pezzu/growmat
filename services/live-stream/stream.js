@@ -1,3 +1,4 @@
+const audit = require('./../commons/audit.js');
 const express = require('express');
 const app = express();
 
@@ -69,7 +70,7 @@ const streamServer = http.createServer( function(request, response) {
     // }
 
     response.connection.setTimeout(0);
-    console.log(
+    audit.log(
         'Stream connected: ' +
         request.socket.remoteAddress + ':' +
         request.socket.remotePort
@@ -81,13 +82,13 @@ const streamServer = http.createServer( function(request, response) {
         }
     });
     request.on('end',function(){
-        console.log('Screen closed');
+        audit.log('Screen closed');
         if (request.socket.recording) {
             request.socket.recording.close();
         }
     });
 }).listen(streamPort);
 
-console.log("Web server running at port " + httpPort);
-console.log("Socket server running at port " + wsPort);
-console.log("Streaming server listens at port " + streamPort);
+audit.log("Web server running at port " + httpPort);
+audit.log("Socket server running at port " + wsPort);
+audit.log("Streaming server listens at port " + streamPort);

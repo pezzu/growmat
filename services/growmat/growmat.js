@@ -1,4 +1,4 @@
-const audit = require('./app/audit.js');
+const audit = require('./../commons/audit.js');
 const express = require('express');
 const app = express();
 const http = require('http');
