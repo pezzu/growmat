@@ -6,7 +6,7 @@
   "apps" : [
     {
       "name"      : "growmat",
-      "script"    : "growmat.js",
+      "script"    : "services/growmat/growmat.js",
       "env_production" : {
         "PORT": 80,
         "NODE_ENV": "production"
@@ -54,7 +54,7 @@
       "ref"  : "origin/stable",
       "repo" : "https://pesu@bitbucket.org/pesu/growmat.git",
       "path" : "/var/local/growmat",
-      "post-deploy" : "npm install --production && pm2 restart ecosystem.json --env production"
+      "post-deploy" : "npm install --production && npm restart"
     }
     // ,
     // dev : {
