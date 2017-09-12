@@ -26,14 +26,16 @@ module.exports = function(passport) {
 
     passport.use('local-signup', new LocalStrategy(
         function(username, password, done) {
-            if (!validPassword(username)) {
-                return done(null, false, { message: 'Hello ' + username });
+            if (!validPassword(username, password)) {
+                console.log('Invalid user or password: ' + username + '/' + password);
+                return done(null, false, { message: 'Invalid user or password' });
             }
+            console.log('Login OK');
             return done(null, username);
-        }));
-
+        })
+    );
 };
 
-function validPassword(password) {
-    return true;
+function validPassword(username, password) {
+    return password === 'morisorangeponynow';
 }

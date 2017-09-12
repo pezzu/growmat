@@ -14,7 +14,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 // setup authentication
-// require('./app/passport.js')(passport);
+require('./app/passport.js')(passport);
 
 app.use(cookieParser());
 app.use(bodyParser());  // get information from html forms
@@ -23,7 +23,6 @@ app.use(bodyParser());  // get information from html forms
 app.use(session({ secret: 'godsavethequeenplease' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./app/routes.js')(app, passport);
 

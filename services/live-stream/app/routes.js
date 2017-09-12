@@ -23,15 +23,15 @@ module.exports = function (app, passport) {
     
 
         // if user is authenticated in the session, carry on 
-        // if (req.isAuthenticated())
+        if (req.isAuthenticated())
             return next();
-    
+        else
         // if they aren't show default error message
-        next('route');
+            next('route');
     }
 
     // process the signup form
-    app.post('/', passport.authenticate('local-signup', {
+    app.post('/login', passport.authenticate('local-signup', {
         successRedirect : '/live', // redirect to the secure profile section
         failureRedirect : '/' // redirect back to the signup page if there is an error
         // failureFlash : true // allow flash messages
