@@ -2,12 +2,13 @@ const audit = require('./app/audit.js');
 const express = require('express');
 const app = express();
 const http = require('http');
+const path = require('path');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.use(express.static('public'));
+app.use(express.static(path.resolve(__dirname, 'public')));
 
 require('./app/routes.js')(app);
 
