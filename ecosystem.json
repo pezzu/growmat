@@ -34,7 +34,7 @@
 
     {
       "name"             : "ffmpeg",
-      "script"           : "ffmpeg.sh",
+      "script"           : "services/live-stream/ffmpeg.sh",
       "exec_interpreter" : "bash",
       "exec_mode"        : "fork",
       "env_production"   : {
