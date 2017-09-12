@@ -17,10 +17,15 @@ const session = require('express-session');
 require('./app/passport.js')(passport);
 
 app.use(cookieParser());
-app.use(bodyParser());  // get information from html forms
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // required for passport
-app.use(session({ secret: 'godsavethequeenplease' })); // session secret
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'godsavethequeenplease'
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
