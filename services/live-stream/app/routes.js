@@ -10,6 +10,10 @@ module.exports = function (app, passport) {
         res.sendFile('login.html', sendOptions);
     });
 
+    app.get('/img/:name', function(req, res) {
+        res.sendFile('img/' + req.params.name, sendOptions);
+    });
+
     app.get('/lib/:name', function(req, res) {
         res.sendFile('lib/' + req.params.name, sendOptions);
     });
