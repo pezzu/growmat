@@ -34,8 +34,7 @@ require('./app/routes.js')(app, passport);
 
 
 const httpPort   = process.argv[2] || process.env.WEB_PORT    || 8443;
-const wsPort     = process.argv[3] || process.env.SOCKET_PORT || parseInt(httpPort) + 1;
-const streamPort = process.argv[4] || process.env.STREAM_PORT || parseInt(httpPort) + 2;
+const streamPort = process.argv[3] || process.env.STREAM_PORT || 8081;
 
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, '../../cert/key.pem')),
@@ -46,8 +45,7 @@ const options = {
 const webServer = https.createServer(options, app).listen(httpPort);
 
 // Websocket Server
-const https4ws = https.createServer(options, app).listen(wsPort);
-const socketServer = new WebSocket.Server({server: https4ws, perMessageDeflate: false});
+const socketServer = new WebSocket.Server({server: webServer, perMessageDeflate: false});
 
 socketServer.broadcast = function(data) {
     socketServer.clients.forEach(function each(client) {
@@ -90,5 +88,4 @@ const streamServer = http.createServer( function(request, response) {
 }).listen(streamPort);
 
 audit.log("Web server running at port " + httpPort);
-audit.log("Socket server running at port " + wsPort);
 audit.log("Streaming server listens at port " + streamPort);

@@ -24,13 +24,11 @@
       "watch"     : false,
       "env_production" : {
         "WEB_PORT"    : 443,
-        "SOCKET_PORT" : 444,
         "STREAM_PORT" : 8081,
         "NODE_ENV": "production"
       },
       "env_dev" : {
         "WEB_PORT"    : 8443,
-        "SOCKET_PORT" : 8444,
         "STREAM_PORT" : 8081,
         "NODE_ENV": "development"
       }
@@ -43,6 +41,9 @@
       "exec_mode"        : "fork",
       "watch"            : false,
       "env_production"   : {
+        "STREAM_PORT" : 8081
+      },
+      "env_dev"   : {
         "STREAM_PORT" : 8081
       }
     }
