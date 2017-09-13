@@ -1,7 +1,10 @@
 const schedule = require('node-schedule');
 const audit = require('./../../commons/audit.js');
 
-const jobs = {};
+const jobs = {
+    on: {},
+    off: {}
+};
 
 function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
 
@@ -11,17 +14,31 @@ function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
     const offTime = new schedule.RecurrenceRule();
     offTime.hour = (24 + 2 - (24-dayLength)/2) % 24;
 
-    jobs.on = {
-        action: fnTurnOn,
-        job:    schedule.scheduleJob(onTime, fnTurnOn),
-        time:   onTime.hour
-    };
+    if(("job" in jobs.on) && (jobs.on.job)) {
+        jobs.on.action = fnTurnOn;
+        jobs.on.job.reschedule(onTime, fnTurnOn);
+        jobs.on.time = onTime.hour;
+    }
+    else {
+        jobs.on = {
+            action: fnTurnOn,
+            job:    schedule.scheduleJob(onTime, fnTurnOn),
+            time:   onTime.hour
+        };
+    }
 
-    jobs.off = {
-        action: fnTurnOff,
-        job:    schedule.scheduleJob(offTime, fnTurnOff),
-        time:   offTime.hour
-    };
+    if(("job" in jobs.off) && (jobs.off.job)) {
+        jobs.off.action = fnTurnOff;
+        jobs.off.job.reschedule(offTime, fnTurnOff);
+        jobs.off.time = offTime.hour;
+    }
+    else {
+        jobs.off = {
+            action: fnTurnOff,
+            job:    schedule.scheduleJob(offTime, fnTurnOff),
+            time:   offTime.hour
+        };
+    }
 
     audit.log('Daylight is scheduled for ' + onTime.hour + ':00 - ' + offTime.hour + ':00');
     setTimeout(turnOnIfNeed, 10*1000);
