@@ -6,6 +6,8 @@ const jobs = {
     off: {}
 };
 
+let scheduled;
+
 function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
 
     const onTime = new schedule.RecurrenceRule();
@@ -41,7 +43,11 @@ function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
     }
 
     audit.log('Daylight is scheduled for ' + onTime.hour + ':00 - ' + offTime.hour + ':00');
-    setTimeout(turnOnIfNeed, 10*1000);
+    if(scheduled) {
+        clearTimeout(scheduled);
+        scheduled = null;
+    }
+    scheduled = setTimeout(turnOnIfNeed, 10*1000);
 }
 
 function turnOnIfNeed() {
