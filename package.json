@@ -10,11 +10,11 @@
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "deploy": "pm2 deploy ecosystem.json production",
+    "deploy": "pm2 deploy ecosystem.json",
     "monitor": "nodemon --ignore services/growmat/public/ --ignore services/live-stream services/growmat/growmat.js 8080",
     "postinstall": "bower install --config.interactive=false && node conf/pi-install.js",
-    "restart": "pm2 restart ecosystem.json --env production",
-    "start": "pm2 start ecosystem.json --env production",
+    "restart": "pm2 restart ecosystem.json --env",
+    "start": "pm2 start ecosystem.json --env",
     "stop": "pm2 stop ecosystem.json"
   },
   "repository": {

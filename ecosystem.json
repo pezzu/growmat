@@ -60,19 +60,22 @@
       "ref"  : "origin/stable",
       "repo" : "https://pesu@bitbucket.org/pesu/growmat.git",
       "path" : "/home/pi/growmat",
-      "post-deploy" : "npm install --production && npm restart"
+      "post-deploy" : "npm install && npm restart production",
+      "env"  : {
+        "NODE_ENV": "production"
+      }
     }
-    // ,
-    // dev : {
-    //   user : 'pi',
-    //   host : '192.168.0.172',
-    //   ref  : 'origin/master',
-    //   repo : 'https://pesu@bitbucket.org/pesu/growmat.git',
-    //   path : '/var/local/growmat/development',
-    //   'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
-    //   env  : {
-    //     NODE_ENV: 'dev'
-    //   }
-    // }
+    ,
+    "dev" : {
+      "user" : "pi",
+      "host" : "192.168.0.172",
+      "ref"  : "origin/master",
+      "repo" : "https://pesu@bitbucket.org/pesu/growmat.git",
+      "path" : "/home/pi/sandbox/growmat",
+      "post-deploy" : "npm install && npm restart dev",
+      "env"  : {
+        "NODE_ENV": "dev"
+      }
+    }
   }
 }
