@@ -7,6 +7,7 @@
     {
       "name"      : "growmat",
       "script"    : "services/growmat/growmat.js",
+      "watch"     : false,
       "env_production" : {
         "PORT": 80,
         "NODE_ENV": "production"
@@ -20,14 +21,17 @@
     {
       "name"      : "stream",
       "script"    : "services/live-stream/stream.js",
+      "watch"     : false,
       "env_production" : {
         "WEB_PORT"    : 443,
         "SOCKET_PORT" : 444,
-        "STREAM_PORT" : 8080,
+        "STREAM_PORT" : 8081,
         "NODE_ENV": "production"
       },
       "env_dev" : {
-        "WEB_PORT": 8090,
+        "WEB_PORT"    : 8443,
+        "SOCKET_PORT" : 8444,
+        "STREAM_PORT" : 8081,
         "NODE_ENV": "development"
       }
     },
@@ -37,8 +41,9 @@
       "script"           : "services/live-stream/ffmpeg.sh",
       "exec_interpreter" : "bash",
       "exec_mode"        : "fork",
+      "watch"            : false,
       "env_production"   : {
-        "STREAM_PORT" : 8080
+        "STREAM_PORT" : 8081
       }
     }
   ],
