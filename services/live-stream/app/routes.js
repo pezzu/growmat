@@ -20,18 +20,18 @@ module.exports = function (app, passport) {
 
     // route middleware to make sure a user is logged in
     function isLoggedIn(req, res, next) {
-    
 
-        // if user is authenticated in the session, carry on 
+
+        // if user is authenticated in the session, carry on
         if (req.isAuthenticated())
             return next();
         else
-        // if they aren't show default error message
-            next('route');
+        // if they aren't redirect to login page
+            res.redirect('/');
     }
 
     // process the signup form
-    app.post('/login', passport.authenticate('local-signup', {
+    app.post('/', passport.authenticate('local-signup', {
         successRedirect : '/live', // redirect to the secure profile section
         failureRedirect : '/' // redirect back to the signup page if there is an error
         // failureFlash : true // allow flash messages
