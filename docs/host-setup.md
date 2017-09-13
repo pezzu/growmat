@@ -17,6 +17,36 @@ ls -l /dev/gpiomem
 crw-rw---- 1 root gpio 244, 0 Dec 28 22:51 /dev/gpiomem
 ```
 
+2. Allow node to occupy 80 & 443 ports, in order to avoid startup as root (from: https://superuser.com/questions/710253/allow-non-root-process-to-bind-to-port-80-and-443/892391/)
+
+Option 1: Use [CAP_NET_BIND_SERVICE](http://man7.org/linux/man-pages/man7/capabilities.7.html) to grant low-numbered port access to a process:
+
+With this you can grant permanent access to a specific binary to bind to low-numbered ports via the  setcap command:
+```
+sudo setcap CAP_NET_BIND_SERVICE=+eip `which node`
+```
+For more details on the e/i/p part, see [cap_from_text](https://linux.die.net/man/3/cap_from_text).
+
+After doing this, /path/to/binary will be able to bind to low-numbered ports. Note that you must use setcap on the binary itself rather than a symlink.
+
+Option 2: Use authbind to grant one-time access, with finer user/group/port control:
+
+The [authbind](https://en.wikipedia.org/wiki/Authbind) ([man page](http://manpages.ubuntu.com/manpages/zesty/en/man1/authbind.1.html)) tool exists precisely for this.
+
+Install authbind using your favorite package manager.
+Configure it to grant access to the relevant ports, e.g. to allow 80 and 443 from all users and groups:
+```
+sudo touch /etc/authbind/byport/80
+sudo touch /etc/authbind/byport/443
+sudo chmod 777 /etc/authbind/byport/80
+sudo chmod 777 /etc/authbind/byport/443
+```
+Now execute your command via authbind (optionally specifying --deep or other arguments, see the man page):
+
+authbind --deep /path/to/binary command line args
+E.g.
+authbind --deep java -jar SomeServer.jar
+
 ## INSTALLATION
 
 1. nodejs 8.x (from: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
