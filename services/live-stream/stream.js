@@ -58,8 +58,6 @@ const wss = new WebSocket.Server({verifyClient: VerifyClient, server: webServer,
 
 function VerifyClient(info, done) {
     sessionParser(info.req, {}, () => {
-        console.log(info.req.session);
-
         if(info.req.session && info.req.session.passport && info.req.session.passport.user) {
             done(true);
         }
