@@ -9,24 +9,33 @@ const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
 
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
+const helmet = require('helmet');
 
 // setup authentication
 require('./app/passport.js')(passport);
 
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(helmet());
 
-// required for passport
-app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: 'godsavethequeenplease'
-}));
+const sessionStore = new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+});
+
+
+const sessionParser = session({
+    name:               'sessionId',
+    store:              sessionStore,
+    resave:             false,
+    saveUninitialized:  false,
+    secret:             'godsavethequeenplease'
+});
+
+app.use(sessionParser);
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
@@ -45,10 +54,23 @@ const options = {
 const webServer = https.createServer(options, app).listen(httpPort);
 
 // Websocket Server
-const socketServer = new WebSocket.Server({server: webServer, perMessageDeflate: false});
+const wss = new WebSocket.Server({verifyClient: VerifyClient, server: webServer, perMessageDeflate: false});
 
-socketServer.broadcast = function(data) {
-    socketServer.clients.forEach(function each(client) {
+function VerifyClient(info, done) {
+    sessionParser(info.req, {}, () => {
+        console.log(info.req.session);
+
+        if(info.req.session && info.req.session.passport && info.req.session.passport.user) {
+            done(true);
+        }
+        else {
+            done(false, 401, 'Not authenticated!');
+        }
+    });
+}
+
+wss.broadcast = function(data) {
+    wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
             client.send(data);
         }
@@ -74,7 +96,7 @@ const streamServer = http.createServer( function(request, response) {
         request.socket.remotePort
     );
     request.on('data', function(data){
-        socketServer.broadcast(data);
+        wss.broadcast(data);
         if (request.socket.recording) {
             request.socket.recording.write(data);
         }
