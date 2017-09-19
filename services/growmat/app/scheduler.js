@@ -24,8 +24,8 @@ function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
         var onHour = (24 + 2 + (24-dayLength)/2) % 24,
            offHour = (24 + 2 - (24-dayLength)/2) % 24;
 
-        scheduleJob(jobs.on, onHour);
-        scheduleJob(jobs.off, offHour);
+        scheduleJob(jobs.on, fnTurnOn, onHour);
+        scheduleJob(jobs.off, fnTurnOff, offHour);
     }
 
     jobs.on.time = onHour;
@@ -49,7 +49,7 @@ function cancelAllJobs() {
 }
 
 
-function scheduleJob(job, hour) {
+function scheduleJob(job, action, hour) {
     const trigger = new schedule.RecurrenceRule();
     trigger.hour = hour;
 
