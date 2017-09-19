@@ -6,59 +6,82 @@ const jobs = {
     off: {}
 };
 
-let scheduled;
 
 function setDayLight(dayLength, fnTurnOn, fnTurnOff) {
 
-    const onTime = new schedule.RecurrenceRule();
-    onTime.hour = (24 + 2 + (24-dayLength)/2) % 24;
+    jobs.on.action = fnTurnOn;
+    jobs.off.action = fnTurnOff;
 
-    const offTime = new schedule.RecurrenceRule();
-    offTime.hour = (24 + 2 - (24-dayLength)/2) % 24;
-
-    if(("job" in jobs.on) && (jobs.on.job)) {
-        jobs.on.action = fnTurnOn;
-        jobs.on.job.reschedule(onTime, fnTurnOn);
-        jobs.on.time = onTime.hour;
+    if(dayLength == 0) {
+        var onHour = 0, offHour = 0;        // always off
+        cancelAllJobs();
+    }
+    else if (dayLength == 24) {
+        var onHour = 0, offHour = 24;       // always on
+        cancelAllJobs();
     }
     else {
-        jobs.on = {
-            action: fnTurnOn,
-            job:    schedule.scheduleJob(onTime, fnTurnOn),
-            time:   onTime.hour
-        };
+        var onHour = (24 + 2 + (24-dayLength)/2) % 24,
+           offHour = (24 + 2 - (24-dayLength)/2) % 24;
+
+        scheduleJob(jobs.on, onHour);
+        scheduleJob(jobs.off, offHour);
     }
 
-    if(("job" in jobs.off) && (jobs.off.job)) {
-        jobs.off.action = fnTurnOff;
-        jobs.off.job.reschedule(offTime, fnTurnOff);
-        jobs.off.time = offTime.hour;
+    jobs.on.time = onHour;
+    jobs.off.time = offHour;
+
+    audit.log('Daylight is scheduled for ' + onHour + ':00 - ' + offHour + ':00');
+    turnOnIfNeeded();
+}
+
+
+function cancelAllJobs() {
+    if(jobs.on.job) {
+        jobs.on.job.cancel();
+        jobs.on.job = null;
+    }
+
+    if(jobs.off.job) {
+        jobs.off.job.cancel();
+        jobs.off.job = null;
+    }
+}
+
+
+function scheduleJob(job, hour) {
+    const trigger = new schedule.RecurrenceRule();
+    trigger.hour = hour;
+
+    if(job.job) {
+        job.job.reschedule(trigger, action);
     }
     else {
-        jobs.off = {
-            action: fnTurnOff,
-            job:    schedule.scheduleJob(offTime, fnTurnOff),
-            time:   offTime.hour
-        };
+        job.job = schedule.scheduleJob(trigger, action);
     }
+}
 
-    audit.log('Daylight is scheduled for ' + onTime.hour + ':00 - ' + offTime.hour + ':00');
+
+let scheduled = null;
+
+function turnOnIfNeeded() {
     if(scheduled) {
         clearTimeout(scheduled);
         scheduled = null;
     }
-    scheduled = setTimeout(turnOnIfNeed, 10*1000);
+    scheduled = setTimeout(doTurn, 10*1000);
+
+    function doTurn() {
+        const now = new Date().getHours();
+        if((now >= jobs.on.time) && (now < jobs.off.time)) {
+            jobs.on.action();
+        }
+        else {
+            jobs.off.action();
+        }
+    }
 }
 
-function turnOnIfNeed() {
-    const now = new Date().getHours();
-    if((now >= jobs.on.time) && (now < jobs.off.time) || (jobs.on.time === jobs.off.time)) {
-        jobs.on.action();
-    }
-    else {
-        jobs.off.action();
-    }
-}
 
 function onTime() {
     return jobs.on.time;
