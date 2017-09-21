@@ -52,6 +52,7 @@ function cancelAllJobs() {
 function scheduleJob(job, action, hour) {
     const trigger = new schedule.RecurrenceRule();
     trigger.hour = hour;
+    trigger.minute = 0;
 
     if(job.job) {
         job.job.reschedule(trigger, action);
