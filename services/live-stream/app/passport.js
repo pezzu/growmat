@@ -38,5 +38,5 @@ module.exports = function(passport) {
 };
 
 function validPassword(username, password) {
-    return password === 'morisorangeponynow';
+    return password === 'process.env.password';
 }
