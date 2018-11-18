@@ -1,5 +1,5 @@
 const schedule = require('node-schedule');
-const audit = require('./../../commons/audit.js');
+const audit = require('audit');
 
 const jobs = {
     on: {},

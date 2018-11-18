@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  audit:
+    image: auditimage
+    build: services/audit
+  growmat:
+    build: services/growmat
+    ports:
+      - "8080:80"
+    depends_on:
+      - audit

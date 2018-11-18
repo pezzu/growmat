@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const audit = require('./../../commons/audit.js');
+const audit = require('audit');
 
 const homedir = require('os').homedir();
 const storage = path.join(homedir, '.gromat.json');

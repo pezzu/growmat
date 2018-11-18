@@ -1,7 +1,7 @@
 const box = require('./peripheral.js');
 const settings = require('./settings.js');
 const scheduler = require('./scheduler.js');
-const audit = require('./../../commons/audit.js');
+const audit = require('audit');
 
 async function getParams() {
     return {
