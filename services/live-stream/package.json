@@ -1,18 +1,17 @@
 {
-  "name": "api",
+  "name": "live-stream",
   "version": "1.0.0",
-  "description": "API module",
+  "description": "Video streaming module",
   "author": "peter.sukhenko@gmail.com",
-  "main": "growmat.js",
+  "main": "stream.js",
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0",
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "monitor": "nodemon --ignore public/ growmat.js 8080",
-    "postinstall": "bower install --allow-root --config.interactive=false && node conf/pi-install.js",
-    "start": "node growmat.js 8080"
+    "monitor": "nodemon --ignore public/ stream.js 8443",
+    "start": "node stream.js 8443"
   },
   "repository": {
     "type": "git",
@@ -21,17 +20,16 @@
   "dependencies": {
     "audit": "file:../audit",
     "body-parser": "^1.18.1",
-    "bower": "^1.8.2",
     "cookie-parser": "^1.4.3",
-    "detect-rpi": "^1.2.0",
     "express": "^4.15.3",
-    "node-schedule": "^1.2.5"
+    "express-session": "^1.15.5",
+    "helmet": "^3.8.1",
+    "memorystore": "^1.5.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "ws": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
-  },
-  "piDependencies": {
-    "node-dht-sensor": "^0.0.32",
-    "rpi-gpio": "^0.8.1"
   }
 }

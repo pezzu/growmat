@@ -10,3 +10,14 @@ services:
       - "8080:80"
     depends_on:
       - audit
+  live-stream:
+    build: services/live-stream
+    ports:
+      - "8443:443"
+    depends_on:
+      - audit
+      - ffmpeg
+  ffmpeg:
+    build: services/ffmpeg
+    ports:
+      - "8081:8081"

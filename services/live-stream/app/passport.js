@@ -1,4 +1,4 @@
-const audit = require('./../../commons/audit.js');
+const audit = require('audit');
 const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
