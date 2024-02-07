@@ -31,13 +31,13 @@
     "helmet": "^3.8.1",
     "memorystore": "^1.5.0",
     "node-schedule": "^1.2.5",
-    "passport": "^0.4.0",
+    "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pm2": "^2.7.0",
+    "pm2": "^5.3.1",
     "ws": "^3.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^3.0.3"
   },
   "piDependencies": {
     "node-dht-sensor": "^0.0.32",
